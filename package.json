@@ -9,7 +9,7 @@
     "@tailwindcss/postcss": "^4.0.17",
     "mongodb": "^6.15.0",
     "next": "latest",
-    "next-swagger-doc": "^0.4.1",
+    "next-swagger-doc": "0.4.0",
     "postcss": "^8.5.3",
     "react": "^18",
     "react-dom": "^18",
