@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import validateJwt from './app/api/auth/validateJwt';
 
 export async function middleware(request) {
+    if (request.url.includes('/api/auth/login')) {
+        return NextResponse.next();
+    }
+
     // Extract the Authorization header
     const authHeader = request.headers.get('authorization');
 
@@ -25,5 +29,5 @@ export async function middleware(request) {
 
 // Apply this middleware to all API routes
 export const config = {
-    matcher: '/api/movies',
+    matcher: '/api/:path*',
 };
