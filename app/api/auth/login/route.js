@@ -7,8 +7,8 @@ import { NextResponse } from 'next/server';
  *   post:
  *     tags:
  *       - Auth
- *     summary: Authenticate user and generate tokens
- *     description: Returns an access token in the response and a refresh token in an HTTP-only cookie
+ *     summary: Authenticate user and generate tokens to store it in cookies
+ *     description: Returns an access token and a refresh token, both stored in HTTP-only cookies
  *     responses:
  *       200:
  *         description: Authentication successful
@@ -29,7 +29,7 @@ export async function POST(request) {
             return NextResponse.json({ status: 401, message: 'Invalid credentials' }, { status: 401 });
         }
 
-        // Secret key encoding
+        // Encode secret key
         const secretKey = new TextEncoder().encode(process.env.JWT_SECRET);
 
         // Generate Access Token (short-lived)
@@ -45,9 +45,16 @@ export async function POST(request) {
             .sign(secretKey);
 
         // Create response object
-        const response = NextResponse.json({ status: 200, accessToken });
+        const response = NextResponse.json({ status: 200, message: 'Login successful' });
 
-        // Store refresh token in a secure HTTP-only cookie
+        // Store tokens in secure HTTP-only cookies
+        response.cookies.set('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 15 * 60, // 15 minutes
+        });
+
         response.cookies.set('refreshToken', refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
