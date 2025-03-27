@@ -7,6 +7,9 @@
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.0.17",
+    "bcryptjs": "^3.0.2",
+    "jose": "^6.0.10",
+    "js-cookie": "^3.0.5",
     "mongodb": "^6.15.0",
     "next": "latest",
     "next-swagger-doc": "0.4.0",
