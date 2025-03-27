@@ -1,30 +1,44 @@
-import { jwtVerify } from 'jose';
+import { jwtVerify, SignJWT } from 'jose';
+import { NextResponse } from 'next/server';
 
-/**
- * Validates the JWT stored in cookies.
- * @param {Request} request - The incoming request object.
- * @returns {Promise<boolean>} - Returns true if the token is valid, otherwise false.
- */
-export default async function validateJwt(request) {
+export async function POST(request) {
     try {
-        // Get the access token from cookies
-        const accessToken = request.cookies.get('accessToken')?.value;
+        // Get refresh token from cookies
+        const refreshToken = request.cookies.get('refreshToken')?.value;
 
-        if (!accessToken) {
-            console.log('No access token found in cookies');
-            return false;
+        if (!refreshToken) {
+            return NextResponse.json({ status: 401, message: 'Unauthorized: Missing refresh token' }, { status: 401 });
         }
 
         // Decode secret key
         const secretKey = new TextEncoder().encode(process.env.JWT_SECRET);
 
-        // Verify JWT
-        const { payload } = await jwtVerify(accessToken, secretKey);
+        // Verify refresh token
+        const { payload } = await jwtVerify(refreshToken, secretKey);
 
-        // If valid, return true
-        return !!payload;
+        if (!payload?.username) {
+            return NextResponse.json({ status: 401, message: 'Unauthorized: Invalid refresh token' }, { status: 401 });
+        }
+
+        // Generate new access token (valid for 15 minutes)
+        const accessToken = await new SignJWT({ username: payload.username })
+            .setProtectedHeader({ alg: 'HS256' })
+            .setExpirationTime('15m')
+            .sign(secretKey);
+
+        // Create response and set new access token cookie
+        const response = NextResponse.json({ status: 200, accessToken });
+
+        response.cookies.set('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 15 * 60, // 15 minutes
+        });
+
+        return response;
     } catch (error) {
-        console.error('JWT validation error:', error.message);
-        return false;
+        console.error('Refresh token error:', error);
+        return NextResponse.json({ status: 401, message: 'Unauthorized: Invalid or expired refresh token' }, { status: 401 });
     }
 }
