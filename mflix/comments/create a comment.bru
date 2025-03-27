@@ -1,0 +1,21 @@
+meta {
+  name: create a comment
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/movies/comments
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Charlie Brown",
+    "email": "charlie@example.com",
+    "movie_id": "573a1390f29313caabcd42e8",
+    "text": "The acting was superb, and the cinematography was breathtaking.",
+    "date": "2023-10-01T14:30:00.000Z"
+  }
+}

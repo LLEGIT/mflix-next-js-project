@@ -1,0 +1,33 @@
+meta {
+  name: update theaters
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/api/movies/theaters/67e2853d1a6fda9bc00b41e2
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "theaterId": 2004,
+    "location": {
+      "address": {
+        "street1": "567 Main Street",
+        "city": "Texas",
+        "state": "IL",
+        "zipcode": "43000"
+      },
+      "geo": {
+        "type": "Point",
+        "coordinates": [
+          -56.6436,
+          65.7817
+        ]
+      }
+    }
+  }
+  
+}

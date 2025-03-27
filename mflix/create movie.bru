@@ -1,0 +1,73 @@
+meta {
+  name: create movie
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/api/movies/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "plot": "A young boy discovers he has magical powers and embarks on a journey to save his kingdom from an evil sorcerer.",
+    "genres": [
+      "Fantasy",
+      "Adventure"
+    ],
+    "runtime": 120,
+    "cast": [
+      "Tom Holland",
+      "Emma Watson",
+      "Ian McKellen",
+      "Helena Bonham Carter"
+    ],
+    "poster": "https://example.com/images/magical_quest_poster.jpg",
+    "title": "Magical Quest",
+    "fullplot": "In a land filled with magic and wonder, a young boy named Eli discovers he possesses extraordinary powers. When an evil sorcerer threatens his kingdom, Eli must embark on a perilous journey to unlock his true potential and save his people from darkness.",
+    "languages": [
+      "English"
+    ],
+    "released": "2023-07-15T00:00:00.000Z",
+    "directors": [
+      "Christopher Nolan"
+    ],
+    "rated": "PG",
+    "awards": {
+      "wins": 5,
+      "nominations": 12,
+      "text": "5 wins and 12 nominations."
+    },
+    "lastupdated": "2023-09-22 14:35:18.000000000",
+    "year": 2023,
+    "imdb": {
+      "rating": 8.2,
+      "votes": 54213,
+      "id": 1234
+    },
+    "countries": [
+      "USA",
+      "UK"
+    ],
+    "type": "movie",
+    "tomatoes": {
+      "viewer": {
+        "rating": 4.5,
+        "numReviews": 12548,
+        "meter": 90
+      },
+      "fresh": 28,
+      "critic": {
+        "rating": 8.5,
+        "numReviews": 30,
+        "meter": 95
+      },
+      "rotten": 2,
+      "lastUpdated": "2023-09-20T12:45:30.000Z"
+    },
+    "num_mflix_comments": 42
+  }
+  
+}
