@@ -2,6 +2,102 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Comments
+ *     description: Operations related to comments
+ *
+ * /api/comments/{idComment}:
+ *   get:
+ *     tags:
+ *       - Comments
+ *     summary: Retrieve a comment by ID
+ *     description: Fetch a comment from the database using its ID.
+ *     parameters:
+ *       - in: path
+ *         name: idComment
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the comment to retrieve.
+ *     responses:
+ *       200:
+ *         description: Comment retrieved successfully
+ *       400:
+ *         description: Bad Request - Invalid comment ID
+ *       404:
+ *         description: Comment not found
+ *       500:
+ *         description: Internal Server Error
+ *
+ *   put:
+ *     tags:
+ *       - Comments
+ *     summary: Update a comment by ID
+ *     description: Update the details of a comment in the database using its ID.
+ *     parameters:
+ *       - in: path
+ *         name: idComment
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the comment to update.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the commenter.
+ *               email:
+ *                 type: string
+ *                 description: The email of the commenter.
+ *               movie_id:
+ *                 type: string
+ *                 description: The ID of the movie the comment is associated with.
+ *               text:
+ *                 type: string
+ *                 description: The text of the comment.
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: The date and time the comment was made.
+ *     responses:
+ *       200:
+ *         description: Comment updated successfully
+ *       400:
+ *         description: Bad Request - Invalid comment ID
+ *       404:
+ *         description: Comment not found
+ *       500:
+ *         description: Internal Server Error
+ *
+ *   delete:
+ *     tags:
+ *       - Comments
+ *     summary: Delete a comment by ID
+ *     description: Remove a comment from the database using its ID.
+ *     parameters:
+ *       - in: path
+ *         name: idComment
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the comment to delete.
+ *     responses:
+ *       200:
+ *         description: Comment deleted successfully
+ *       400:
+ *         description: Bad Request - Invalid comment ID
+ *       404:
+ *         description: Comment not found
+ *       500:
+ *         description: Internal Server Error
+ */
 export async function GET(request, { params }) {
     try {
         const client = await clientPromise;

@@ -1,6 +1,77 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Theaters
+ *     description: Operations related to theaters
+ *
+ * /api/theaters:
+ *   get:
+ *     tags:
+ *       - Theaters
+ *     summary: Retrieve a list of theaters
+ *     description: Fetch up to 10 theaters from the database.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved theaters
+ *       500:
+ *         description: Internal Server Error
+ *
+ *   post:
+ *     tags:
+ *       - Theaters
+ *     summary: Create a new theater
+ *     description: Endpoint to add a new theater to the database.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               theaterId:
+ *                 type: string
+ *                 description: Unique identifier for the theater.
+ *               location:
+ *                 type: object
+ *                 properties:
+ *                   address:
+ *                     type: object
+ *                     properties:
+ *                       street1:
+ *                         type: string
+ *                         description: Street address of the theater.
+ *                       city:
+ *                         type: string
+ *                         description: City where the theater is located.
+ *                       state:
+ *                         type: string
+ *                         description: State where the theater is located.
+ *                       zipcode:
+ *                         type: string
+ *                         description: Zip code of the theater's location.
+ *                   geo:
+ *                     type: object
+ *                     properties:
+ *                       type:
+ *                         type: string
+ *                         enum: [Point]
+ *                         description: GeoJSON type (must be 'Point').
+ *                       coordinates:
+ *                         type: array
+ *                         items:
+ *                           type: number
+ *                         description: Geographical coordinates of the theater.
+ *     responses:
+ *       201:
+ *         description: Theater created successfully
+ *       400:
+ *         description: Bad Request - Missing required fields
+ *       500:
+ *         description: Internal Server Error
+ */
 export async function GET() {
     try {
         const client = await clientPromise;

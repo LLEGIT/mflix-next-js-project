@@ -2,6 +2,66 @@ import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Comments
+ *     description: Operations related to comments
+ *
+ * /api/comments:
+ *   get:
+ *     tags:
+ *       - Comments
+ *     summary: Retrieve comments
+ *     description: Fetch comments from the database. Optionally filter by movie ID.
+ *     parameters:
+ *       - in: query
+ *         name: movie_id
+ *         schema:
+ *           type: string
+ *         description: The ID of the movie to filter comments by.
+ *     responses:
+ *       200:
+ *         description: Comments retrieved successfully
+ *       500:
+ *         description: Internal Server Error
+ *
+ *   post:
+ *     tags:
+ *       - Comments
+ *     summary: Create a new comment
+ *     description: Endpoint to add a new comment to the database.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 description: The name of the commenter.
+ *               email:
+ *                 type: string
+ *                 description: The email of the commenter.
+ *               movie_id:
+ *                 type: string
+ *                 description: The ID of the movie the comment is associated with.
+ *               text:
+ *                 type: string
+ *                 description: The text of the comment.
+ *               date:
+ *                 type: string
+ *                 format: date-time
+ *                 description: The date and time the comment was made.
+ *     responses:
+ *       201:
+ *         description: Comment created successfully
+ *       400:
+ *         description: Bad Request - Missing required fields
+ *       500:
+ *         description: Internal Server Error
+ */
 export async function GET(request) {
     try {
         const client = await clientPromise;
