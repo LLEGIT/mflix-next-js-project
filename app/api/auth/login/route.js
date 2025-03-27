@@ -64,7 +64,10 @@ export async function POST(request) {
 
         return response;
     } catch (error) {
-        console.error('Login error:', error);
+        if (error.message === 'Unexpected end of JSON input') {
+            return NextResponse.json({ status: 400, message: 'Incorrect body provided' }, { status: 400 });
+        }
+
         return NextResponse.json({ status: 500, message: 'Internal Server Error' }, { status: 500 });
     }
 }
