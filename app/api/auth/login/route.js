@@ -7,13 +7,42 @@ import { NextResponse } from 'next/server';
  *   post:
  *     tags:
  *       - Auth
- *     summary: Authenticate user and generate tokens to store it in cookies
+ *     summary: Authenticate user and generate tokens to store in cookies
  *     description: Returns an access token and a refresh token, both stored in HTTP-only cookies
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The username for authentication.
+ *               password:
+ *                 type: string
+ *                 description: The password for authentication.
+ *             required:
+ *               - username
+ *               - password
  *     responses:
  *       200:
- *         description: Authentication successful
+ *         description: Authentication successful, returns access and refresh tokens in cookies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   description: Status code of the response
+ *                 message:
+ *                   type: string
+ *                   description: Description of the response
+ *       400:
+ *         description: Missing or invalid credentials
  *       401:
- *         description: Invalid credentials
+ *         description: Invalid username or password
  *       500:
  *         description: Internal Server Error
  */

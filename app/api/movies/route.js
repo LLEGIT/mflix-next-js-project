@@ -22,12 +22,14 @@ export async function GET() {
         const movies = await db.collection('movies').find({}).limit(50).toArray();
 
         return NextResponse.json(
-            { status: 200, data: movies }
+            { status: 200, data: movies },
+            { status: 200 }
         );
     }
     catch (error) {
         return NextResponse.json(
-            { status: 500, message: 'Internal Server Error', error: error.message }
+            { status: 500, message: 'Internal Server Error', error: error.message },
+            { status: 500 }
         );
     }
 }
@@ -128,7 +130,7 @@ export async function POST(request) {
 
         // Validate the request body
         if (!body.title || !body.plot || !body.genres || !body.runtime) {
-            return NextResponse.json({ status: 400, message: 'Missing required fields' });
+            return NextResponse.json({ status: 400, message: 'Missing required fields' }, { status: 400 });
         }
 
         const newMovie = {
@@ -153,8 +155,8 @@ export async function POST(request) {
         };
 
         const result = await db.collection('movies').insertOne(newMovie);
-        return NextResponse.json({ status: 201, message: 'Movie created', data: { movieId: result.insertedId } });
+        return NextResponse.json({ status: 201, message: 'Movie created', data: { movieId: result.insertedId } }, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ status: 500, message: 'Internal Server Error', error: error.message });
+        return NextResponse.json({ status: 500, message: 'Internal Server Error', error: error.message }, { status: 500 });
     }
 }

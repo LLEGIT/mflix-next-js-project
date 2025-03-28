@@ -79,12 +79,14 @@ export async function GET() {
         const theaters = await db.collection('theaters').find({}).limit(10).toArray();
 
         return NextResponse.json(
-            { status: 200, data: theaters }
+            { status: 200, data: theaters },
+            { status: 200 }
         );
     }
     catch (error) {
         return NextResponse.json(
-            { status: 500, message: 'Internal Server Error', error: error.message }
+            { status: 500, message: 'Internal Server Error', error: error.message },
+            { status: 500 }
         );
     }
 }
@@ -97,7 +99,7 @@ export async function POST(request) {
 
         // Validate the request body
         if (!body.theaterId || !body.location || !body.location.address || !body.location.geo) {
-            return NextResponse.json({ status: 400, message: 'Missing required fields' });
+            return NextResponse.json({ status: 400, message: 'Missing required fields' }, { status: 400 });
         }
 
         const newTheater = {
@@ -117,8 +119,8 @@ export async function POST(request) {
         };
 
         const result = await db.collection('theaters').insertOne(newTheater);
-        return NextResponse.json({ status: 201, message: 'Theater created', data: { theaterId: result.insertedId } });
+        return NextResponse.json({ status: 201, message: 'Theater created', data: { theaterId: result.insertedId } }, { status: 201 });
     } catch (error) {
-        return NextResponse.json({ status: 500, message: 'Internal Server Error', error: error.message });
+        return NextResponse.json({ status: 500, message: 'Internal Server Error', error: error.message }, { status: 500 });
     }
 }
