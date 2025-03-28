@@ -4,6 +4,10 @@
 
 This project is a REST API interactig with data in a MongoDB Atlas database, using Vercel platform to be hosted online [here](https://vercel.com/llegits-projects/mflix-next-js-project/55U13456faZZ7WXLHDdGczDZFdpc).
 
+## Architecture
+
+![Architecture](schema.png)
+
 ## What's inside
 - Api routes like /api/movies using the Next.js routing system
 - Swagger documentation at /api-doc
