@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project is a REST API interactig with data in a MongoDB Atlas database, using Vercel platform to be hosted online [here]([https://mflix-next-js-project-git-master-llegits-projects.vercel.app/]).
+This project is a REST API interactig with data in a MongoDB Atlas database, using Vercel platform to be hosted online [here](https://mflix-next-js-project-git-master-llegits-projects.vercel.app/).
 
 ## Architecture
 
